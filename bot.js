@@ -65,11 +65,18 @@ const rmCommand = bot.registerCommand("rm", async (msg, args) => {
 	return response.statusText;
 });
 
-//const mvCommand = bot.registerCommand("mv" async (msg, args) => {
+const mvCommand = bot.registerCommand("mv", async (msg, args) => {
 	//move a file from one location to another
-//});
+	paths = args.join(" ").split(" to ");
+	if (paths[0].substring(paths[0].length-4) != paths[1].substring(paths[1].length-4)) {
+		return "File extensions does not match";
+	}
+	let response = await occlient.moveFile(paths[0], paths[1]);
+	return response.statusText;
+});
 
 const stat = bot.registerCommand("stat", async (msg, args) => {
+	//get stats on a file
 	let response = await occlient.stat(args.join(" "));
 	var msg = '```json\n'.concat(JSON.stringify(response, undefined, 4), '```');
 	return msg;
