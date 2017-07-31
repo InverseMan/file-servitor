@@ -1,0 +1,17 @@
+{
+  "name": "file-servitor",
+  "version": "1.0.0",
+  "description": "Bot that uses the WebDAV protocol to manage files uploaded to discord",
+  "main": "bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "PlayerVMachine#6223",
+  "license": "ISC",
+  "dependencies": {
+    "eris": "^0.7.0",
+    "fs": "0.0.1-security",
+    "superagent": "^3.5.2",
+    "webdav": "^1.0.0-rc1"
+  }
+}
