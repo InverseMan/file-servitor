@@ -69,5 +69,10 @@ const rmCommand = bot.registerCommand("rm", async (msg, args) => {
 	//move a file from one location to another
 //});
 
+const stat = bot.registerCommand("stat", async (msg, args) => {
+	let response = await occlient.stat(args.join(" "));
+	var msg = '```json\n'.concat(JSON.stringify(response, undefined, 4), '```');
+	return msg;
+});
 
 bot.connect();
