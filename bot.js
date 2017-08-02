@@ -16,6 +16,8 @@ var occlient = createClient(
 	config.OCPASS
 );
 
+var path = "/";
+
 bot.on("ready", () => {
   console.log("Ready!");
 });
@@ -26,19 +28,29 @@ bot.registerCommand("ping", "Pong!", { // Make a ping command
     fullDescription: "This command could be used to check if the bot is up. Or entertainment when you're bored."
 });
 
+const pwdCommand = bot.registerCommand("pwd", path, {
+    description: "Prints the current working directory",
+    fullDescription: "Prints the current working directory"	
+});
+
+const cdCommand = bot.registerCommand("cd", (msg, args) => {
+	path = path.concat(args.join(""));
+	return path;
+});
+
+
 const listCommand = bot.registerCommand("list", async (msg, args) => {
 	//lists the contents of the directory in the path
-    let files = await occlient.getDirectoryContents(args);
+    let files = await occlient.getDirectoryContents(path);
 	return '```'.concat(files.map(f => f.filename).join("\n"),'```');
 }, {
 	description: "Lists files in a directory",
     fullDescription: "This command lists the files in a directory the directory can be provided in args"
 });
 
-const fileCommand = bot.registerCommand("file", async (msg, args) => {
+const fupCommand = bot.registerCommand("fup", async (msg, args) => {
 	//upload a file
 	let response = await request.get(msg.attachments[0].url);
-	path = '/'
 	let result = await occlient.putFileContents(path.concat(msg.attachments[0].filename), response.body, {format:"binary"});
 	return result.statusText;
 }, {
@@ -80,6 +92,26 @@ const stat = bot.registerCommand("stat", async (msg, args) => {
 	let response = await occlient.stat(args.join(" "));
 	var msg = '```json\n'.concat(JSON.stringify(response, undefined, 4), '```');
 	return msg;
+});
+
+const fdown = bot.registerCommand("fdown", async (msg, args) => {
+	var temp = args.join(" ").split('/');
+	var fname = temp[temp.length-1];
+
+	occlient.getFileContents(args.join()).then(function(data) {
+        fs.writeFileSync('./'.concat(fname), data);
+    });
+
+    console.log("reached");
+
+/*	fs.readFile('./'.concat(fname), (err, data) => {
+		let sent = await bot.createMessage(msg.channel.id, fname, data);
+	}); */
+	
+	data = fs.readFileSync('./'.concat(fname));
+	let sent = await bot.createMessage(msg.channel.id, fname, data);
+	
+	return "logged";
 });
 
 bot.connect();
