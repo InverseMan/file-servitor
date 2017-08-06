@@ -11,6 +11,8 @@
   "dependencies": {
     "eris": "^0.7.0",
     "fs": "0.0.1-security",
+    "google-auth-library": "^0.10.0",
+    "googleapis": "^20.1.0",
     "superagent": "^3.5.2",
     "webdav": "^1.0.0-rc1"
   }
