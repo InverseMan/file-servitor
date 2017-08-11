@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "eris": "^0.7.0",
+    "express": "^4.15.4",
     "fs": "0.0.1-security",
     "google-auth-library": "^0.10.0",
     "googleapis": "^20.1.0",
